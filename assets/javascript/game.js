@@ -19,7 +19,6 @@
 
 
 window.onload = function() {
-// var list = ["characters.name", "characters.name","characters.name",]
 // window[list[0]]
 
 var characters = {
@@ -62,34 +61,39 @@ var characters = {
 
 };
 
+var list = [ characters.harry, characters.fleur, characters.cedric, characters.krum]
+// var list = [ 'characters.harry', 'characters.fleur', 'characters.cedric', 'characters.krum']
 
-$.each( characters, function( index, char){
-	create(characters[index])
 
-console.log(characters[index]);
-
+$.each( list, function( index, char){
+	create(list[index])
 
 })
 
-// function create(player) {
-// 	$(player.location).append($('<div>').addClass('player').attr(player.blob));
-// 	$('#' + player.blob).append($('<p>').html(player.name));
-// 	$('#' + player.blob).append($('<img>').attr('src', player.avatar));
-// 	$('#' + player.blob).append($('<p>').html(player.hp));
-
-// console.log(player.location);
-// }
-
 function create(player) {
-	$(player.location).append($('<div>').addClass('style player' + player.blob));
+	$(player.location).append($('<div>').addClass('start style player' + player.blob));
 	$('.player' + player.blob).append($('<p>').html(player.name));
 	$('.player' + player.blob).append($('<img>').attr('src', player.avatar));
 	$('.player' + player.blob).append($('<p>').html(player.hp + 'HP'));
 
-console.log(player.location);
+
 }
 
+$('.start').on('click', function (){
+	alert("clicked!");
 
+
+	list.splice(0, 1);
+	list.remove(0, 3);
+
+
+	console.log(list);
+})
+
+
+
+
+console.log(characters);
 
 }
 
