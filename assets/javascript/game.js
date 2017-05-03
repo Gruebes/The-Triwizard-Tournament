@@ -19,7 +19,6 @@
 
 
 window.onload = function() {
-// window[list[0]]
 
 var characters = {
 		harry : {
@@ -62,7 +61,6 @@ var characters = {
 };
 
 var list = [ characters.harry, characters.fleur, characters.cedric, characters.krum]
-// var list = [ 'characters.harry', 'characters.fleur', 'characters.cedric', 'characters.krum']
 
 
 $.each( list, function( index, char){
@@ -82,10 +80,7 @@ function create(player) {
 $('.start').on('click', function (){
 	alert("clicked!");
 
-
 	list.splice(0, 1);
-	list.remove(0, 3);
-
 
 	console.log(list);
 })
