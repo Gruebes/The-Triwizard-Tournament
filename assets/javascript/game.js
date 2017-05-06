@@ -34,7 +34,7 @@ var characters = {
 			blob: 'fleur',
 			name: 'Fleur Delacour',
 			avatar: '../week-4-game/assets/images/fleur.jpg',
-			hp: 110,
+			hp: 125,
 			attack: 25,
 			counterAttack: 20,
 			location: '.charContainer',
@@ -43,7 +43,7 @@ var characters = {
 			blob: 'cedric',
 			name: 'Cedric Diggory',
 			avatar: '../week-4-game/assets/images/cedric.png',
-			hp: 120,
+			hp: 135,
 			attack: 22,
 			counterAttack: 13,
 			location: '.charContainer',
@@ -52,7 +52,7 @@ var characters = {
 			blob: 'krum',
 			name: 'Victor Krum',
 			avatar: '../week-4-game/assets/images/victor.jpg',
-			hp: 180,
+			hp: 160,
 			attack: 18,
 			counterAttack: 15,
 			location: '.charContainer',
@@ -64,8 +64,6 @@ function setWizard(hero) {
   char.hp = hero.hp;
   char.attack = hero.attack;
   char.counterAttack = hero.counterAttack;
-
-  // console.log(char);
 }
 
 function moveEnemies() {
@@ -75,13 +73,12 @@ function moveEnemies() {
 	$('.defenders').append($('.enemies'));
 }
 
-function setEmeny(villain) {
+function setEnemy(villain) {
   wizDef.name = villain.name;
+  wizDef.blob = villain.blob;
   wizDef.hp = villain.hp;
   wizDef.attack = villain.attack;
   wizDef.counterAttack = villain.counterAttack;
-
-  // console.log(wizDef);
 }
 
 function create(player) {
@@ -97,7 +94,7 @@ create(characters[index])
 
 // Character Click Handler
 	$('.frames').on('click', function (){
-		console.log('this.id = ' + this.id);
+		// console.log('this.id = ' + this.id);
 
 		if(heroSelected === false) {
 			$(this).detach();
@@ -110,13 +107,21 @@ create(characters[index])
 			$('#displayChooseOpponent').show();
 
 			setWizard(characters[this.id]);
+			// console.log('char #1 ' + this.id);
+
 			heroSelected = true;
 			moveEnemies();
 
 		} else if ((heroSelected === true) && (defenderSelected !== true)) {
+			setEnemy(characters[this.id]);
+			// console.log('Opponent' + this.id);
+
+
 			$(this).detach();
 			$(this).removeClass('enemies').attr('id', 'defender');
 			$('.battleGround').append(this);
+			$('#comments').html(' Click Attack to cast the first spell! ')
+
 
 			$('#displayChooseOpponent').hide();
 			$('#displayChooseNextOpponent').hide();
@@ -125,7 +130,6 @@ create(characters[index])
 			$('#displayYourOpponent').show();
 			$('.attack').show();
 
-			setEmeny(characters.harry);
 			defenderSelected = true;
 		}
 	})
@@ -134,48 +138,73 @@ create(characters[index])
 		if ((heroSelected === true) && (defenderSelected === true) && (gameOver !== true)) {
 			wizDef.hp = wizDef.hp - char.attack;
 			char.attack = char.attack + 8;
+
 		
-		$('#defender').children('.hp').html(wizDef.hp + ' HP');
+			$('#defender').children('.hp').html(wizDef.hp + ' HP');
+			$('#comments').html('You hit ' + wizDef.name + ' for '+ char.attack + '<br>' + wizDef.blob + ' hit you back for ' + wizDef.attack)
 		
-			if(wizDef.hp > 0) {
-				char.hp = char.hp - wizDef.attack;
-				$('.heroChar').children('.hp').html(char.hp + ' HP');
 
-			} else if (wizDef.hp < 0){
+				if(wizDef.hp > 0) {
+					char.hp = char.hp - wizDef.attack;
+					$('.heroChar').children('.hp').html(char.hp + ' HP');
+					// console.log('Lose? ' + char.hp);
 
-				$('#defender').remove();
-				wizDef = {};
-				defenderSelected = false;
-				deadWizards++
+				// WIZARD DEFEATED
+				} else if (wizDef.hp <= 0){
+					$('#comments').html('You have defeated ' + wizDef.name + '. ' + '<br>' + 'Who shall you battle next?')
 
-				$('#displayChooseNextOpponent').show();
-				$('#displayYourOpponent').hide();
-				$('.defenders').show();
-				$('.attack').hide();
+					$('#defender').remove();
+					wizDef = {};
+					defenderSelected = false;
+					deadWizards++
 
-				if (deadWizards === 3) {
-					$('#displayChooseNextOpponent').hide();
+					$('#displayChooseNextOpponent').show();
+					$('#displayYourOpponent').hide();
+					$('.defenders').show();
+					$('.attack').hide();
+
+					// You Win!
+					if (deadWizards === 3) {
+						$('#displayChooseNextOpponent').hide();
+						$('.reset').show();
+						$('#comments').html('Congratulations, ' +  char.name + '!!! <BR> You have won the Triwizard Tournement!')
+
+						console.log(deadWizards);
+
+					}
+
+					// console.log('defenderSelected = ' + defenderSelected)
 				}
 
-				console.log('defenderSelected = ' + defenderSelected)
-			}	
+				// YOU LOSE!
+				if(char.hp <= 0){
+					char.hp = 0;
+					$('.heroChar').children('.hp').html(char.hp + ' HP');
+
+					$('.reset').show();
+					$('.attack').hide();
+					$('#comments').html('Oh no! you have been defeated by ' + wizDef.name + '<br>' + 'Click Rest to play again.')
+
+
+				}	
 		}
 	})
 
+	//RESET
 	$('.reset').on('click', function(){
+	    location.reload();
 
 		deadWizards = 0;
 		// $('.frames').remove();
-		$('.frames').detach();
-		$('.charsAvailable').append('.frames');
+		// $('.frames').detach();
+		// $('.charsAvailable').append('.frames');
 
-		$.each( characters, function( index, char){
-			create(characters[index]);
-		})
-
+		// $.each( characters, function( index, char){
+		// 	create(characters[index]);
+		//})
 
 	})
 
-
 }
+
 

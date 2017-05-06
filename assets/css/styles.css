@@ -64,10 +64,16 @@ button {
 
 }
 
+#comments {
+	font-size: 24px;
+	color: white;
+}
+
 .attack {
 	margin: 15px 0;
 }
 
 .reset {
 	margin-bottom: 50px;
+	margin-top: 8px;
 }
