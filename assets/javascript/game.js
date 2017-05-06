@@ -5,8 +5,8 @@ char = {};
 wizDef = {};
 heroSelected = false;
 defenderSelected = false;
-enemiesDefeated = 0;
 gameOver = false;
+enemiesDefeated = 0;
 deadWizards = 0;
 
 $('#displayYou').hide();
@@ -60,8 +60,6 @@ function setWizard(hero) {
   char.hp = hero.hp;
   char.attack = hero.attack;
   char.counterAttack = hero.counterAttack;
-
-  console.log(hero);
 }
 
 function moveEnemies() {
@@ -96,7 +94,6 @@ create(characters[index])
 			$(this).addClass('heroChar');
 			$('.myChar').append(this);
 			$(this).unbind();
-
 			$('#displayYou').show();
 			$('#displayChooseWizard').hide();
 			$('#displayChooseOpponent').show();
@@ -161,7 +158,7 @@ create(characters[index])
 
 					$('.reset').show();
 					$('.attack').hide();
-					$('#comments').html('Oh no! you have been defeated by ' + wizDef.name + '<br>' + 'Click Rest to play again.')
+					$('#comments').html('Oh no! you have been defeated by ' + wizDef.name + '<br>' + 'Click Reset to play again.')
 				}	
 		}
 	})
@@ -170,7 +167,6 @@ create(characters[index])
 	$('.reset').on('click', function(){
 	    location.reload();
 	})
-
 }
 
 
