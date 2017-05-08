@@ -1,6 +1,7 @@
 // Welcome to The Triwizard Tournement
 window.onload = function() {
 
+function setGame () {
 char = {};
 wizDef = {};
 heroSelected = false;
@@ -15,6 +16,24 @@ $('#displayChooseNextOpponent').hide();
 $('#displayYourOpponent').hide();
 $('.reset').hide();
 $('.attack').hide();
+
+}
+setGame();
+
+// char = {};
+// wizDef = {};
+// heroSelected = false;
+// defenderSelected = false;
+// gameOver = false;
+// enemiesDefeated = 0;
+// deadWizards = 0;
+
+// $('#displayYou').hide();
+// $('#displayChooseOpponent').hide();
+// $('#displayChooseNextOpponent').hide();
+// $('#displayYourOpponent').hide();
+// $('.reset').show();
+// $('.attack').hide();
 
 var characters = {
 		harry : {
@@ -64,7 +83,7 @@ function setWizard(hero) {
 
 function moveEnemies() {
 	$('.enemies').detach();
-	$('.charsAvailable').addClass('enemies');
+	$('.vanishingCabinet').addClass('enemies');
 	$('.defenders').append($('.enemies'));
 }
 
@@ -76,16 +95,34 @@ function setEnemy(villain) {
   wizDef.counterAttack = villain.counterAttack;
 }
 
-function create(player) {
-	$('.charsAvailable').append($('<div>').addClass('frames').attr('id', player.blob));
-	$('#' + player.blob).append($('<p>').html(player.name));
-	$('#' + player.blob).append($('<img>').attr('src', player.avatar));
-	$('#' + player.blob).append($('<p>').addClass('hp').html(player.hp + 'HP'));
-}
+function start() {
+		$('.charsAvailable').append($('<div>').addClass('vanishingCabinet'));
+	
+		$.each( characters, function( index, char){
+		create(characters[index])
+		})
 
-$.each( characters, function( index, char){
-create(characters[index])
-})
+		function create(player) {
+		$('.vanishingCabinet').append($('<div>').addClass('frames').attr('id', player.blob));
+		$('#' + player.blob).append($('<p>').html(player.name));
+		$('#' + player.blob).append($('<img>').attr('src', player.avatar));
+		$('#' + player.blob).append($('<p>').addClass('hp').html(player.hp + 'HP'));
+	}
+
+
+
+// }
+// start();
+	// function create(player) {
+	// 	$('.charsAvailable').append($('<div>').addClass('frames').attr('id', player.blob));
+	// 	$('#' + player.blob).append($('<p>').html(player.name));
+	// 	$('#' + player.blob).append($('<img>').attr('src', player.avatar));
+	// 	$('#' + player.blob).append($('<p>').addClass('hp').html(player.hp + 'HP'));
+	// }
+
+	// $.each( characters, function( index, char){
+	// create(characters[index])
+	// })
 
 // Character Click Handler
 	$('.frames').on('click', function (){
@@ -98,6 +135,8 @@ create(characters[index])
 			$('#displayChooseWizard').hide();
 			$('#displayChooseOpponent').show();
 
+			console.log(this)
+
 			setWizard(characters[this.id]);
 			heroSelected = true;
 			moveEnemies();
@@ -106,9 +145,12 @@ create(characters[index])
 			setEnemy(characters[this.id]);
 			defenderSelected = true;
 			$(this).detach();
-			$(this).removeClass('enemies').attr('id', 'defender');
+			$(this).removeClass('enemies').addClass('defender');
 			$('.battleGround').append(this);
 			$('#comments').html(' Click Attack to cast the first spell! ')
+
+			console.log(this)
+
 
 			$('#displayChooseOpponent').hide();
 			$('#displayChooseNextOpponent').hide();
@@ -118,12 +160,15 @@ create(characters[index])
 		}
 	})
 
+}
+start();
+
 	$('.attack').on('click', function(){
 		if ((heroSelected === true) && (defenderSelected === true) && (gameOver !== true)) {
 			wizDef.hp = wizDef.hp - char.attack;
 			char.attack = char.attack + 8;
 		
-			$('#defender').children('.hp').html(wizDef.hp + ' HP');
+			$('.defender').children('.hp').html(wizDef.hp + ' HP');
 			$('#comments').html('You hit ' + wizDef.name + ' for '+ char.attack + '<br>' + wizDef.blob + ' hit you back for ' + wizDef.attack);
 
 				if(wizDef.hp > 0) {
@@ -133,7 +178,7 @@ create(characters[index])
 				// WIZARD DEFEATED
 				} else if (wizDef.hp <= 0){
 					$('#comments').html('You have defeated ' + wizDef.name + '. ' + '<br>' + 'Who shall you battle next?');
-					$('#defender').remove();
+					$('.defender').remove();
 					wizDef = {};
 					defenderSelected = false;
 					deadWizards++
@@ -165,7 +210,14 @@ create(characters[index])
 
 	//RESET
 	$('.reset').on('click', function(){
-	    location.reload();
+		$('.frames').remove();
+		$('.enemies').remove();
+		$('#comments').empty();
+		$('.defenders').show();
+		setGame();
+	    start();
+
+
 	})
 }
 
