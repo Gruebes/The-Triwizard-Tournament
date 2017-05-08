@@ -14,6 +14,7 @@ $('#displayYou').hide();
 $('#displayChooseOpponent').hide();
 $('#displayChooseNextOpponent').hide();
 $('#displayYourOpponent').hide();
+$('#displayChooseWizard').show();
 $('.reset').hide();
 $('.attack').hide();
 
