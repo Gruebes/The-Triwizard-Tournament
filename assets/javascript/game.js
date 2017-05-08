@@ -20,21 +20,6 @@ $('.attack').hide();
 }
 setGame();
 
-// char = {};
-// wizDef = {};
-// heroSelected = false;
-// defenderSelected = false;
-// gameOver = false;
-// enemiesDefeated = 0;
-// deadWizards = 0;
-
-// $('#displayYou').hide();
-// $('#displayChooseOpponent').hide();
-// $('#displayChooseNextOpponent').hide();
-// $('#displayYourOpponent').hide();
-// $('.reset').show();
-// $('.attack').hide();
-
 var characters = {
 		harry : {
 			blob: 'harry',
@@ -108,21 +93,6 @@ function start() {
 		$('#' + player.blob).append($('<img>').attr('src', player.avatar));
 		$('#' + player.blob).append($('<p>').addClass('hp').html(player.hp + 'HP'));
 	}
-
-
-
-// }
-// start();
-	// function create(player) {
-	// 	$('.charsAvailable').append($('<div>').addClass('frames').attr('id', player.blob));
-	// 	$('#' + player.blob).append($('<p>').html(player.name));
-	// 	$('#' + player.blob).append($('<img>').attr('src', player.avatar));
-	// 	$('#' + player.blob).append($('<p>').addClass('hp').html(player.hp + 'HP'));
-	// }
-
-	// $.each( characters, function( index, char){
-	// create(characters[index])
-	// })
 
 // Character Click Handler
 	$('.frames').on('click', function (){

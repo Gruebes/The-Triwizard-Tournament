@@ -22,8 +22,13 @@ button {
 
 .charsAvailable, .vanishingCabinet, .myChar, .defenders, .battleGround {
 	display: flex;
-	flex-flow: : row wrap;
+	flex-direction: row;
+	flex-wrap: wrap;
 	justify-content: center;
+}
+
+.vanishingCabinet {
+
 }
 
 .frames {
