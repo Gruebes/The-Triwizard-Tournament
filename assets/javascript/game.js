@@ -94,6 +94,10 @@ function start() {
 		$('#' + player.blob).append($('<p>').addClass('hp').html(player.hp + 'HP'));
 	}
 
+function jumpToPageBottom() {
+    $('html, body').scrollTop( $(document).height());
+}
+
 // Character Click Handler
 	$('.frames').on('click', function (){
 		if(heroSelected === false) {
